@@ -1,0 +1,16 @@
+{
+  "name": "everythingisconnected",
+  "version": "1.0.0",
+  "description": "",
+  "main": "sketch.js",
+  "scripts": {
+    "test": "mocha tests/tests.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "vue-fire": "^0.1.0",
+    "mocha": "^3.5.3"
+  
+  }
+}
