@@ -44,13 +44,7 @@ const specify ="gemstones";
 
 const corpusData = corpora.getFile(corpus, specify);
 
-
-app.get('/random', showRandom);
-
-
-function showRandom(req, res){
-
-  let randomThing = function (){
+ const randomThing = function (){
     // for (let i=0; i < 3; i++){}
       let allCategories = corpora.getCategories()
       let randomCategory = allCategories[Math.floor(Math.random() * allCategories.length)];
@@ -58,7 +52,10 @@ function showRandom(req, res){
       // let randomDocument = allDocuments[1]
       let randomDocument = allDocuments[Math.floor(Math.random()* allDocuments.length)]
       let randomDocumentName = randomDocument.name
+      // here write code so that if randomDocument has a description property pass it and if it doesn't then run randomDocument again to make sure whatever is passed can be counted to the correct field to find the actual entries. There seems to be no naming standard between the title of the lists and the field where the entries actually are
       // console.log(randomDocumentName)
+      // 
+      // if they do have a description then the items can be found in randomDocument[1], where description is randomDocument[0]
       let allItems = corpora.getFile(randomCategory, randomDocumentName)
       ///I need to figure out how to select just one entry to pass to the route and then in sketch js use that json entry to make a dom element from
       // console.log(randomItem[randomDocumentName])
@@ -66,9 +63,20 @@ function showRandom(req, res){
      
 
       // console.log(categories[2])
+      console.log(randomDocumentName)
+      let holder = { 
+        "title": randomDocumentName,
+        "data": allItems
+      }
     
-      return allItems
+      return holder
     }
+app.get('/random', showRandom);
+
+
+function showRandom(req, res){
+
+ 
       res.send(randomThing())
 }
 
@@ -79,5 +87,22 @@ function showAll(req, res) {
   res.send(corpusData);
 }
 
+app.post('/path/to/post', gotData);
+function gotData(req, res) {
+let theFunction = randomThing()
 
+  // Look at the "body" of a POST to get
+  // data, not the "params" like with a GET
+  var name = req.body.name;
+  var password = req.body.password;
+
+
+
+  var reply = {
+    message: "thank you"
+  }
+      res.send(theFunction)
+  // res.send(randomThing());
+  // res.send(theFunction);
+}
 // module.exports = corpora
